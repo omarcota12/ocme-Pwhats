@@ -1,0 +1,31 @@
+﻿@page
+@model IndexModel
+@using System.Net.Http.Headers;
+@{
+ViewData["Title"] = "Home page";
+//Token
+//Omar cota medina
+string token =
+    "EAAGniXMNL5sBO1G2ZBWX4bL8ZA6Dro6eE1n89aAgVwWAp8IKx3cU54sZAwZCSGu3yKRlIyZBdTZAZClEjrCZA6XZB5lyBOoTivno14fuwkoroATtC0oYuIqpcAiG8vKVz5eWaiKsJUVZAVvAj0iTngnEEZAy3f68Mkoye2lWAZCa1ZCbB4e5ZC6Wtt6r4cYUZBDrPwUSZCh0q1X5IBzZBwe2LNFBzePXM2oAVwKoZD";
+//Identificador de número de teléfono
+    string idTelefono = "437525819451885";
+//Nuestro telefono
+string telefono = "526441933752";
+HttpClient client = new HttpClient();
+HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post,
+"https://graph.facebook.com/v15.0/" + idTelefono + "/messages");
+request.Headers.Add("Authorization", "Bearer " + token);
+request.Content = new StringContent("{ \"messaging_product\": \"whatsapp\", \"to\": \"" +
+telefono + "\", \"type\": \"template\", \"template\": { \"name\": \"Omarcotamedina\", \"language\": { \"code\": \"en_US\" } } }");
+request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+HttpResponseMessage response = await client.SendAsync(request);
+//response.EnsureSuccessStatusCode();
+string responseBody = await response.Content.ReadAsStringAsync();
+}
+
+
+<div class="text-center">
+<h1 class="display-4">Welcome</h1>
+<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with
+ASP.NET Core</a>.</p>
+</div>
